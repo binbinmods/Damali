@@ -1,8 +1,8 @@
 {
   "name": "Damali_The_Minitaur",
-  "version_number": "0.1.3",
+  "version_number": "0.1.0",
   "website_url": "https://github.com/binbinmods/Damali",
-  "description": "New Hero Mod for Damali, the Minitaur. A new hero that specializes in x, y, and z",
+  "description": "New Hero Mod for Damali, the Minitaur. A new hero that specializes in being fast, furious, and stomping on those slower than him.",
   "dependencies": [
     "meds-Obeliskial_Content-1.5.0",
     "meds-Obeliskial_Essentials-1.4.6"

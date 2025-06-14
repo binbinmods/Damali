@@ -8,6 +8,7 @@ using UnityEngine;
 using System;
 using static Damali.Traits;
 using BepInEx.Configuration;
+using static Obeliskial_Essentials.CardDescriptionNew;
 
 namespace Damali
 {
@@ -51,7 +52,15 @@ namespace Damali
                 _contentFolder: "Damali",
                 _type: ["content", "hero", "trait"]
             );
-            // apply patches            
+            // apply patches
+            string card = "minitaurjeeringvoice";
+            string text = $"{medsSpriteText("slow")} on monsters can stack";
+            AddTextToCardDescription(text, TextLocation.ItemBeforeActivation, card, includeAB: true);
+
+            card = "minitaurjeeringvoice";
+            text = $"{medsSpriteText("fast")} on you can stack";
+            AddTextToCardDescription(text, TextLocation.ItemBeforeActivation, card, includeAB: true);
+
 
             harmony.PatchAll();
         }

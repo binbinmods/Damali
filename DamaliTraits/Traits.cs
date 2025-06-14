@@ -69,26 +69,21 @@ namespace Damali
 
             if (_trait == trait0)
             {
-                // Gain 1 evade at combat start 
-                _character.SetAuraTrait(_character, "evade", 1);
+                // Fury on you increases Speed by 1 per charge.
             }
 
 
             else if (_trait == trait2a)
             {
                 // trait2a
-                // Evasion +1. 
-                // Evasion on you stacks and increases All Damage by 1 per charge. 
-                // When you play a Defense card, gain 1 Energy and Draw 1. (2 times/turn)
+                // Whenever you apply Slow, gain 4 block for each applied
                 string traitName = traitData.TraitName;
                 string traitId = _trait;
 
-                if (CanIncrementTraitActivations(traitId) && _castedCard.HasCardType(Enums.CardType.Defense))// && MatchManager.Instance.energyJustWastedByHero > 0)
+                if (_auxString == "slow")
                 {
-                    LogDebug($"Handling Trait {traitId}: {traitName}");
-                    _character?.ModifyEnergy(1);
-                    DrawCards(1);
-                    IncrementTraitActivations(traitId);
+                    // LogDebug($"Handling Trait {traitId}: {traitName}");
+                    _character.SetAuraTrait(_character, "block", 4 * _auxInt);
                 }
             }
 
@@ -97,7 +92,7 @@ namespace Damali
             else if (_trait == trait2b)
             {
                 // trait2b:
-                // Stealth on heroes increases All Damage by an additional 15% per charge and All Resistances by an additional 5% per charge.",
+                // Increases All Damage by 3% per speed difference between you and the target.
                 string traitName = traitData.TraitName;
                 string traitId = _trait;
 
@@ -106,24 +101,34 @@ namespace Damali
             else if (_trait == trait4a)
             {
                 // trait 4a;
-                // Evasion on you can't be purged unless specified. 
-                // Stealth grants 25% additional damage per charge.",
+                // At the start of your turn, reduce the cost of all cards by 1 for every 20 Fury on you.
                 string traitName = traitData.TraitName;
                 string traitId = _trait;
 
                 LogDebug($"Handling Trait {traitId}: {traitName}");
+                ReduceCostByStacks(Enums.CardType.None, "fury", 20, ref _character, ref heroHand, ref cardDataList, traitName, true);
+
             }
 
             else if (_trait == trait4b)
             {
-                // trait 4b:
-                // Heroes Only lose 75% stealth charges rounding down when acting in stealth.
-                string traitName = traitData.TraitName;
-                string traitId = _trait;
-                LogDebug($"Handling Trait {traitId}: {traitName}");
             }
 
         }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Character), "DamageBonus")]
+
+        public static void DamageBonusPostfix(Character __instance, ref float[] __result, Enums.DamageType DT, int energyCost = 0)
+        {
+            // Trait2b Increases All Damage by 3% per Speed above 15. Slow on Enemies reduces All Resistances by 3% per Charge.
+            // Fury on you increases All Resistances by 0.5% per charge. Taunt on you increases all Resistances by 10% per charge. Chase Down applies to all Heroes.
+            if (__instance.HaveTrait(trait2b) || (AtOManager.Instance.TeamHaveTrait(trait2b) && AtOManager.Instance.TeamHaveTrait(trait4b)))
+            {
+                __result[1] += 3 * (__instance.GetSpeed()[0] - 15);
+            }
+        }
+
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Trait), "DoTrait")]
@@ -158,43 +163,55 @@ namespace Damali
             string traitOfInterest;
             switch (_acId)
             {
-                // trait2a:
-                // Evasion on you stacks and increases All Damage by 1 per charge. 
+                // trait0:
+                // Fury on you increases Speed by 1 per charge.
 
                 // trait2b:
-                // Stealth on heroes increases All Damage by an additional 15% per charge and All Resistances by an additional 5% per charge.",
-
-                // trait 4a;
-                // Evasion on you can't be purged unless specified. 
-                // Stealth grants 25% additional damage per charge.",
+                // Trait2b Increases All Damage by 3% per Speed above 15.
+                //  Slow on Enemies reduces Blunt Resistance by 4% per Charge.
 
                 // trait 4b:
-                // Heroes Only lose 75% stealth charges rounding down when acting in stealth.
+                // Fury on you increases All Resistances by 0.5% per charge. 
+                // Taunt on you increases All Resistances by 10% per charge. 
+                // Chase Down applies to all Heroes.
 
-                case "evasion":
-                    traitOfInterest = trait2a;
+                case "fury":
+                    traitOfInterest = trait0;
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Trait, traitOfInterest, AppliesTo.ThisHero))
                     {
-                        __result.GainCharges = true;
-                        __result.AuraDamageType = Enums.DamageType.All;
-                        float multiplierAmount = 1.0f;  //characterOfInterest.HaveTrait(trait4a) ? 0.3f : 0.2f;
-                        __result.AuraDamageIncreasedPerStack = multiplierAmount;
-                        // __result.HealDoneTotal = Mathf.RoundToInt(multiplierAmount * characterOfInterest.GetAuraCharges("shield"));
+                        __result.CharacterStatModified = Enums.CharacterStat.Speed;
+                        __result.CharacterStatAbsoluteValuePerStack = 1;
+                        __result.CharacterStatChargesMultiplierNeededForOne = 1;
+
                     }
-                    traitOfInterest = trait4a;
+                    traitOfInterest = trait4b;
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Trait, traitOfInterest, AppliesTo.ThisHero))
-                    {
-                        __result.Removable = false;
-                    }
-                    break;
-                case "stealth":
-                    traitOfInterest = trait2b;
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Trait, traitOfInterest, AppliesTo.Heroes))
                     {
                         __result.ResistModified = Enums.DamageType.All;
-                        __result.ResistModifiedPercentagePerStack += 5;
-                        __result.AuraDamageType = Enums.DamageType.All;
-                        __result.AuraDamageIncreasedPercentPerStack += 15;
+                        __result.ResistModifiedPercentagePerStack = 0.5f;
+                    }
+
+                    break;
+
+                case "taunt":
+                    traitOfInterest = trait4b;
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Trait, traitOfInterest, AppliesTo.ThisHero))
+                    {
+                        __result.ResistModified = Enums.DamageType.All;
+                        __result.ResistModifiedPercentagePerStack = 10f;
+                    }
+                    break;
+                case "slow":
+                    traitOfInterest = trait2b;
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Trait, traitOfInterest, AppliesTo.Monsters))
+                    {
+                        __result.ResistModified = Enums.DamageType.Blunt;
+                        __result.ResistModifiedPercentagePerStack = -4;
+                    }
+                    string enchant = "minitaurjeeringvoice";
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Enchantment, enchant, AppliesTo.Monsters))
+                    {
+                        __result.GainCharges = true;
                     }
                     break;
             }

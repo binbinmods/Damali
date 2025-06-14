@@ -1,0 +1,15 @@
+{
+    "BaseSkin": true,
+    "PerkLevel": 0,
+    "SkinGO": "skindamali",
+    "SkinID": "minitaurbase",
+    "SkinName": "Default",
+    "SkinOrder": 0,
+    "SkinSubclass": "minitaur",
+    "Sku": "",
+    "SpritePortrait": "damaliPortrait",
+    "SpritePortraitGrande": "damaliPortraitGrande",
+    "SpriteSilueta": "damaliSilueta",
+    "SpriteSiluetaGrande": "damaliSiluetaGrande",
+    "SteamStat": ""
+}

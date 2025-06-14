@@ -1,0 +1,15 @@
+{
+    "AdventureLevel": 0,
+    "BaseCardback": true,
+    "CardbackID": "cardbackminitaur",
+    "CardbackName": "Default",
+    "CardbackOrder": 1000,
+    "CardbackSprite": "cardbackminitaur",
+    "CardbackSubclass": "minitaur",
+    "Locked": false,
+    "ObeliskLevel": 0,
+    "RankLevel": 0,
+    "ShowIfLocked": false,
+    "Sku": "",
+    "SteamStat": ""
+}

@@ -1,0 +1,15 @@
+{
+    "Card0": "minitaurabuse",
+    "Card1": "maim",
+    "Card2": "minitaurjeer",
+    "Card3": "provoke",
+    "Card4": "bludgeon",
+    "Card5": "",
+    "CardSpecial0": "",
+    "CardSpecial1": "",
+    "PackClass": "warrior",
+    "PackID": "damali",
+    "PackName": "Damali",
+    "PerkList": [],
+    "RequiredClass": "minitaur"
+}
