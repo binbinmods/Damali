@@ -53,13 +53,13 @@ namespace Damali
                 _type: ["content", "hero", "trait"]
             );
             // apply patches
-            string card = "minitaurjeeringvoice";
+            string card = "minitaurkeepkicking";
             string text = $"{medsSpriteText("slow")} on monsters can stack";
-            AddTextToCardDescription(text, TextLocation.ItemBeforeActivation, card, includeAB: true);
+            AddTextToCardDescription(text, TextLocation.ItemBeginning, card, includeAB: true);
 
-            card = "minitaurjeeringvoice";
+            card = "minitaurbullishbovine";
             text = $"{medsSpriteText("fast")} on you can stack";
-            AddTextToCardDescription(text, TextLocation.ItemBeforeActivation, card, includeAB: true);
+            AddTextToCardDescription(text, TextLocation.ItemBeginning, card, includeAB: true);
 
 
             harmony.PatchAll();
