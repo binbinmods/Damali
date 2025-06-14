@@ -83,7 +83,7 @@ namespace Damali
                 if (_auxString == "slow")
                 {
                     // LogDebug($"Handling Trait {traitId}: {traitName}");
-                    _character.SetAuraTrait(_character, "block", 4 * _auxInt);
+                    _character.SetAuraTrait(_character, "block", 4);
                 }
             }
 

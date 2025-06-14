@@ -1,8 +1,8 @@
 # Damali, the Minitaur
 
-A hero mod, introducing Damali, a mage/healer who has been trapped in a mental cage. She goes on a journey to break out but has two very different ways of doing so overcoming the issues in a calm and focused way or forcefully breaking out of the cage through sheer will.
+A hero mod, introducing Damali, a mini minotaur with a mean streak. They enjoy nothing more than running down their foes and stomping on them.
 
-This character was designed by @designer.
+Made based on the idea from @Twinstar
 
 This currently does not include any events or quests related to Damali other than those available to all heroes or all heroes of a specific class.
 

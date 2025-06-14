@@ -2,7 +2,7 @@
     "NewGameObjectID": "skindamali",
     "BaseGameObjectID": "deifrang",
     "SpriteToUse": "",
-    "ScaleX": 0.5,
-    "ScaleY": 0.5,
+    "ScaleX": 0.75,
+    "ScaleY": 0.75,
     "Flip": true
 }
