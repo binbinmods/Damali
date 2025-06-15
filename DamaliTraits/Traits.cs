@@ -8,10 +8,6 @@ using static Damali.CustomFunctions;
 using static Damali.Plugin;
 using static Damali.DescriptionFunctions;
 using static Damali.CharacterFunctions;
-using System.Text;
-using TMPro;
-using Obeliskial_Essentials;
-using System.Data.Common;
 
 namespace Damali
 {
@@ -161,6 +157,7 @@ namespace Damali
 
             Character characterOfInterest = _type == "set" ? _characterTarget : _characterCaster;
             string traitOfInterest;
+            string enchant;
             switch (_acId)
             {
                 // trait0:
@@ -208,42 +205,20 @@ namespace Damali
                         __result.ResistModified = Enums.DamageType.Blunt;
                         __result.ResistModifiedPercentagePerStack = -4;
                     }
-                    string enchant = "minitaurjeeringvoice";
+                    enchant = "minitaurkeepkicking";
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Enchantment, enchant, AppliesTo.Monsters))
+                    {
+                        __result.GainCharges = true;
+                    }
+                    break;
+                case "fast":
+                    enchant = "minitaurbullishbovine";
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Enchantment, enchant, AppliesTo.Monsters))
                     {
                         __result.GainCharges = true;
                     }
                     break;
             }
-        }
-
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(Character), "HealAuraCurse")]
-        public static void HealAuraCursePrefix(ref Character __instance, AuraCurseData AC, ref int __state)
-        {
-            LogInfo($"HealAuraCursePrefix {subclassName}");
-            string traitOfInterest = trait4b;
-            if (IsLivingHero(__instance) && __instance.HaveTrait(traitOfInterest) && AC == GetAuraCurseData("stealth"))
-            {
-                __state = Mathf.FloorToInt(__instance.GetAuraCharges("stealth") * 0.25f);
-                // __instance.SetAuraTrait(null, "stealth", 1);
-
-            }
-
-        }
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(Character), "HealAuraCurse")]
-        public static void HealAuraCursePostfix(ref Character __instance, AuraCurseData AC, int __state)
-        {
-            LogInfo($"HealAuraCursePrefix {subclassName}");
-            string traitOfInterest = trait4b;
-            if (IsLivingHero(__instance) && __instance.HaveTrait(traitOfInterest) && AC == GetAuraCurseData("stealth") && __state > 0)
-            {
-                // __state = __instance.GetAuraCharges("stealth");
-                __instance.SetAuraTrait(null, "stealth", __state);
-            }
-
         }
 
 
@@ -278,34 +253,7 @@ namespace Damali
 
 
 
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(CardData), nameof(CardData.SetDescriptionNew))]
-        public static void SetDescriptionNewPostfix(ref CardData __instance, bool forceDescription = false, Character character = null, bool includeInSearch = true)
-        {
-            // LogInfo("executing SetDescriptionNewPostfix");
-            if (__instance == null)
-            {
-                LogDebug("Null Card");
-                return;
-            }
-            if (!Globals.Instance.CardsDescriptionNormalized.ContainsKey(__instance.Id))
-            {
-                LogError($"missing card Id {__instance.Id}");
-                return;
-            }
 
-
-            if (__instance.CardName == "Mind Maze")
-            {
-                StringBuilder stringBuilder1 = new StringBuilder();
-                LogDebug($"Current description for {__instance.Id}: {stringBuilder1}");
-                string currentDescription = Globals.Instance.CardsDescriptionNormalized[__instance.Id];
-                stringBuilder1.Append(currentDescription);
-                // stringBuilder1.Replace($"When you apply", $"When you play a Mind Spell\n or apply");
-                stringBuilder1.Replace($"Lasts one turn", $"Lasts two turns");
-                BinbinNormalizeDescription(ref __instance, stringBuilder1);
-            }
-        }
 
     }
 }
