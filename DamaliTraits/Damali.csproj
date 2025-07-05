@@ -6,7 +6,7 @@
 	<Product>Damali</Product>
     <AssemblyName>com.binbin.Damali</AssemblyName>
     <Description>Damali, The Minitaur</Description>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>

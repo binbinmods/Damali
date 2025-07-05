@@ -178,7 +178,7 @@ namespace Damali
                     {
                         __result.CharacterStatModified = Enums.CharacterStat.Speed;
                         __result.CharacterStatAbsoluteValuePerStack = 1;
-                        __result.CharacterStatChargesMultiplierNeededForOne = 1;
+                        __result.CharacterStatChargesMultiplierNeededForOne = 2;
 
                     }
                     traitOfInterest = trait4b;
