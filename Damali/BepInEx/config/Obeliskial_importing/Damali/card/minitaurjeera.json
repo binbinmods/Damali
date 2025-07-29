@@ -98,7 +98,7 @@
     "TargetPosition": "Anywhere",
     "TargetSide": "Enemy",
     "TargetType": "Global",
-    "Vanish": false,
+    "Vanish": true,
     "GoldGainQuantity": 0,
     "ShardsGainQuantity": 0,
     "HealSelfPerDamageDonePercent": 0,

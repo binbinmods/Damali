@@ -96,7 +96,7 @@
     "StealAuras": 0,
     "TransferCurses": 0,
     "TargetPosition": "Anywhere",
-    "TargetSide": "Enemy",
+    "TargetSide": "Anyone",
     "TargetType": "Single",
     "Vanish": true,
     "GoldGainQuantity": 0,

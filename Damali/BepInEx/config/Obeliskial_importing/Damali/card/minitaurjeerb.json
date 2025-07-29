@@ -98,7 +98,7 @@
     "TargetPosition": "Anywhere",
     "TargetSide": "Enemy",
     "TargetType": "Single",
-    "Vanish": true,
+    "Vanish": false,
     "GoldGainQuantity": 0,
     "ShardsGainQuantity": 0,
     "HealSelfPerDamageDonePercent": 0,
