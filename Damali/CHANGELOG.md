@@ -1,3 +1,7 @@
+# 0.1.4
+
+Fixed issue with Stubborn Bully occasionally decreasing enemy damage.
+
 # 0.1.3
 
 Fixed Rupture's Speed Scaling

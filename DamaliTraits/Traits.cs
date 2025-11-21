@@ -113,15 +113,16 @@ namespace Damali
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(Character), "DamageBonus")]
+        [HarmonyPatch(typeof(Character), "GetTraitDamagePercentModifiers")]
 
-        public static void DamageBonusPostfix(Character __instance, ref float[] __result, Enums.DamageType DT, int energyCost = 0)
+        public static void GetTraitDamagePercentModifiersPostfix(Character __instance, ref int __result, Enums.DamageType DamageType)
         {
             // Trait2b Increases All Damage by 3% per Speed above 15. Slow on Enemies reduces All Resistances by 3% per Charge.
             // Fury on you increases All Resistances by 0.5% per charge. Taunt on you increases all Resistances by 10% per charge. Chase Down applies to all Heroes.
             if (__instance.HaveTrait(trait2b) || (AtOManager.Instance.TeamHaveTrait(trait2b) && AtOManager.Instance.TeamHaveTrait(trait4b)))
             {
-                __result[1] += 3 * (__instance.GetSpeed()[0] - 15);
+                int amountToAdd = 3 * (__instance.GetSpeed()[0] - 15);
+                __result += Mathf.Max(0, amountToAdd);
             }
         }
 
