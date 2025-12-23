@@ -1,3 +1,7 @@
+# 0.2.0
+
+Update for AtO v1.7.22
+
 # 0.1.4
 
 Fixed issue with Stubborn Bully occasionally decreasing enemy damage.
