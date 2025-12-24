@@ -1,6 +1,10 @@
+# 0.2.1
+
+Update for AtO v1.7.22, fixing issue with GetTraitDamagePercentModifiers
+
 # 0.2.0
 
-Update for AtO v1.7.22
+Update for AtO v1.7.0
 
 # 0.1.4
 

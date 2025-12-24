@@ -117,7 +117,7 @@ namespace Damali
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Character), "GetTraitDamagePercentModifiers")]
 
-        public static void GetTraitDamagePercentModifiersPostfix(Character __instance, ref int __result, Enums.DamageType DamageType)
+        public static void GetTraitDamagePercentModifiersPostfix(Character __instance, ref float __result, Enums.DamageType DamageType)
         {
             // Trait2b Increases All Damage by 3% per Speed above 15. Slow on Enemies reduces All Resistances by 3% per Charge.
             // Fury on you increases All Resistances by 0.5% per charge. Taunt on you increases all Resistances by 10% per charge. Chase Down applies to all Heroes.
